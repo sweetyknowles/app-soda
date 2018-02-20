@@ -10,4 +10,4 @@ const sodaSchema = new Schema({
     
 })
 
-module.exports = companySchema //we can build the Schema here and impor
+module.exports = companySchema //we can build the Schema here and import
