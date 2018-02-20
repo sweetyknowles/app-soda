@@ -4,11 +4,24 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const mongoose = require('mongoose')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+//connected to mongoose db.
+mongoose.connect('mongodb://localhost/soda-app')
+const db = mongoose.connection
+// here it is connecting to the db and displaying a message on connection made or if error, it will dosplay that connection 
+//has an error. 
+db.on('open',() =>{
+  console.log('succeffully connected to mongoose')
+})
+
+db.on('error', (err) => {
+  console.log(err)
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -17,7 +30,7 @@ app.set('view engine', 'hbs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
